@@ -1,7 +1,15 @@
 items-server:
     build: .
-    dockerfile: Dockerfile.server
+    dockerfile: server/Dockerfile
     environment:
       - NODE_ENV=production
     ports:
       - "4000:4000"
+
+mongo-db:
+    build: .
+    dockerfile: db/Dockerfile
+    ports:
+        - "27017:27017"
+    volumes: 
+        - ./db/data:/db/data
