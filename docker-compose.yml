@@ -1,0 +1,7 @@
+items-server:
+    build: .
+    dockerfile: Dockerfile.server
+    environment:
+      - NODE_ENV=production
+    ports:
+      - "4000:4000"
