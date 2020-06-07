@@ -4,11 +4,15 @@ const path = require('path');
 const app = express();
 const server = http.Server(app);
 const port = 4000;
+const items = require('./routes/items');
 
 const cors = require('cors');
+const mongoose = require('./db/mongo');
 
-
-server.listen(port);
+mongoose.connection.on('error', console.error.bind(console, 'There was an error connecting to mongo_db'));
+mongoose.connection.once('open', function callback () {
+  console.log("mongo_db connection succed");
+});
 
 app.use(express.json());
 app.use(require('body-parser').json());
@@ -21,7 +25,7 @@ app.get('/', function(req,res){
     //__dirname : It will resolve to your project folder.
   });
 
-app.use('/items', require('./routes/items'))
+app.use('/items', items)
 
-
+server.listen(port);
 console.debug('Server listening on port ' + port);

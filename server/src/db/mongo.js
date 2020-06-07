@@ -1,12 +1,6 @@
-var MongoClient = require('mongodb').MongoClient;
+const mongoose = require('mongoose');
 var db_config = require('../config/db-config');
 
-MongoClient.connect(db_config.connection.url, function(err, db) {
-  if (err) {
-      console.log(err);
-  }
-  console.log("Database created!");
-  db.close();
-});
-
-module.exports = MongoClient;
+mongoose.connect(db_config.connection.url , { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true  });
+mongoose.Promise = global.Promise;
+module.exports = mongoose;
