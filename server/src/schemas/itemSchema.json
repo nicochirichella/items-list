@@ -1,0 +1,10 @@
+{
+    "id": "/Item",
+    "type": "object",
+    "properties": {
+      "user_id": {"type": "string"},
+      "description": {"type": "string"},
+      "content_url": {"type": "string"}
+    },
+    "required": ["user_id"]
+}

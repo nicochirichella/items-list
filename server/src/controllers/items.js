@@ -28,7 +28,7 @@ module.exports = {
                     user_id: 'user_id',
                     description: 'description'
                 })
-                next(new errors.insertFailure(err.message, 'items_insert_fail', 'controllers.items.create'));
+                next(new errors.insertFailure(err.message, 'items_insert_fail', itemData));
             } else {
                 res.send({ status: 200, message: "creation item succed" });
             }
