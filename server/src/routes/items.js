@@ -1,12 +1,12 @@
 const router = require('express').Router();
 const itemsController = require('../controllers/items');
 
-router.get('/', async function(req, res){
-    itemsController.getAll(req,res);
-});
+router.get('/',
+    itemsController.getAll
+);
 
-router.get('/create', async function(req, res) {
-    itemsController.create(req, res);
-});
+router.post('/create', 
+    itemsController.create
+);
 
 module.exports = router;

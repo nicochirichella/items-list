@@ -15,9 +15,9 @@ mongoose.connection.once('open', function callback () {
 });
 
 app.use(express.json());
+app.use(cors());
 app.use(require('body-parser').json());
 app.use(require('body-parser').urlencoded({ extended: false }));
-// app.use(cors)
 
 // default URL for website
 app.get('/', function(req,res){
@@ -26,6 +26,15 @@ app.get('/', function(req,res){
   });
 
 app.use('/items', items)
+
+app.use((err, req, res, next) => { 
+  res.status(err.status || 500)
+    .json({
+      code: err.code || 'generic_error',
+      message: err.message || 'Internal server error',
+      context: err.context || {},
+    });
+});
 
 server.listen(port);
 console.debug('Server listening on port ' + port);
