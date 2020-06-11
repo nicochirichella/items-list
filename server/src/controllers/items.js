@@ -9,7 +9,7 @@ module.exports = {
                 next(err);
             } else{
                 for (let item of items) {
-                    itemsList.push({id: item._id, name: item.description, content_url: item.content_url, created: item.created_at});
+                    itemsList.push({id: item._id,user_id: item.user_id, name: item.description, content_url: item.content_url, created: item.created_at});
                 }
                 res.json({status: 200, message: "items list found!", data:{items: itemsList}});
             }
@@ -33,5 +33,29 @@ module.exports = {
                 res.send({ status: 200, message: "creation item succed" });
             }
         })
-    }
+    }, 
+    delete: function(req, res, next) {
+        itemModel.findById(req.body.id, function(err, result){
+            if(err){
+                next(err);
+            } else {
+                if (!result) {
+                    next(new errors.NoneExistentElement());
+                } else {
+                    if(result.user_id !== req.body.user_id) {
+                        next(new errors.PermissionDenied('this item does not belong to this user', null, req.body));
+                    } else {
+                        itemModel.findByIdAndDelete(req.body.id, function(err){
+                            if(err) {
+                                next(err)
+                            } else {
+                                res.send({status: 200, message: "Item deleted with success"})
+                            }
+                        })
+                    }
+                }
+            }
+        })
+    },
+
 };

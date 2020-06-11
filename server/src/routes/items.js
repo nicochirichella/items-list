@@ -11,4 +11,8 @@ router.post('/create',
     itemsController.create
 );
 
+router.post('/del',
+    itemsController.delete
+);
+
 module.exports = router;
